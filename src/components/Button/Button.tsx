@@ -23,7 +23,7 @@ export default function Button({
 		<_Button
 			theme={getTheme(fill)}
 			color={btnType}
-			className={`${className} transition-all duration-300`}
+			className={`${className} transition-all duration-300 border-primary-600`}
 			size={size}
 			disabled={isLoading}
 			{...props}
@@ -38,7 +38,7 @@ const getTheme = (isFill: boolean): CustomFlowbiteTheme["button"] => {
 		return {
 			color: {
 				primary:
-					"bg-primary-300 hover:bg-primary-400 focus:ring-primary-100 text-white",
+					"bg-primary-600 hover:bg-primary-700 focus:ring-primary-100 text-white",
 				secondary:
 					"bg-white hover:bg-secondary-50 focus:ring-secondary-100 text-secondary-900",
 				error: "bg-error-500 hover:bg-error-600 focus:ring-error-100 text-white",
@@ -47,7 +47,7 @@ const getTheme = (isFill: boolean): CustomFlowbiteTheme["button"] => {
 	return {
 		color: {
 			primary:
-				"bg-transparent hover:bg-primary-50 focus:ring-primary-100 text-primary-600",
+				"bg-transparent hover:bg-primary-100 focus:ring-primary-600 border-2 border-primary-600 text-primary-600",
 			secondary:
 				"bg-transparent hover:bg-secondary-50 focus:ring-secondary-100 text-secondary-900",
 			error: "bg-transparent hover:bg-error-50 focus:ring-error-100 text-error-600",
@@ -56,9 +56,10 @@ const getTheme = (isFill: boolean): CustomFlowbiteTheme["button"] => {
 };
 
 type PropTypes = ReactNodeChildren &
+	React.ComponentProps<typeof _Button> &
 	React.ComponentPropsWithRef<"button"> & {
 		fill?: boolean;
 		size?: keyof ButtonSizes;
 		btnType?: "primary" | "secondary" | "error";
-		isLoading: boolean;
+		isLoading?: boolean;
 	};
