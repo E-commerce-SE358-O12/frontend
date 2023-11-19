@@ -12,6 +12,14 @@ import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { HiArrowRight, HiMail } from "react-icons/hi";
 
+import { Yesteryear } from "next/font/google";
+
+const yesteryear = Yesteryear({
+	weight: "400",
+	subsets: ["latin"],
+	display: "swap",
+});
+
 export default function Page() {
 	const router = useRouter();
 	const { setToken } = useContext(TokenContext);
@@ -55,13 +63,31 @@ export default function Page() {
 	};
 
 	return (
-		<div className=" h-screen grid grid-cols-5">
-			<div className=" col-span-3 bg-sky-500"></div>
-			<div className=" col-span-2 grid place-items-center">
-				<div className=" w-full p-16">
-					<h1 className=" text-3xl font-semibold">
-						Sign in to our platform
-					</h1>
+		<div
+			className=" h-screen grid place-items-center"
+			style={{
+				background: "linear-gradient(117deg, #1C58F2 0%, #00FFF0 100%)",
+			}}
+		>
+			<div className=" w-max min-w-[550px] rounded-3xl bg-white grid place-items-center">
+				<div className=" w-full px-20 py-16">
+					<div className="relative">
+						<h1 className=" mb-14 text-3xl text-center font-semibold">
+							E-commerce
+						</h1>
+						<p
+							className={`absolute right-5 top-5 text-4xl ${yesteryear.className}`}
+							style={{
+								background:
+									"linear-gradient(90deg, #16B6FA 0%, #DC02FF 100%)",
+								backgroundClip: "text",
+								WebkitBackgroundClip: "text",
+								WebkitTextFillColor: "transparent",
+							}}
+						>
+							Management
+						</p>
+					</div>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<Controller
 							control={control}
@@ -130,8 +156,9 @@ export default function Page() {
 							<Link>Forgot password</Link>
 						</div>
 						<Button
+							fill={false}
 							type="submit"
-							className=" mt-5 w-full"
+							className=" mt-8 w-full"
 							isLoading={isLoading}
 						>
 							<p className=" mr-2">Go to Store</p> <HiArrowRight />
