@@ -13,6 +13,7 @@ import { Controller, useForm } from "react-hook-form";
 import { HiArrowRight, HiMail } from "react-icons/hi";
 
 import { Yesteryear } from "next/font/google";
+import ControllerTextInput from "@/components/ControllerInput/ControllerTextInput";
 
 const yesteryear = Yesteryear({
 	weight: "400",
@@ -42,7 +43,7 @@ export default function Page() {
 
 		if (email && password) {
 			setIsLoading(true);
-			const res = await publicFetcher(API.signIn, "POST", {
+			const res = await publicFetcher(API.authentication.signIn, "POST", {
 				email,
 				password,
 			});
@@ -89,63 +90,40 @@ export default function Page() {
 						</p>
 					</div>
 					<form onSubmit={handleSubmit(onSubmit)}>
-						<Controller
+						<ControllerTextInput
 							control={control}
 							name="username"
+							title="Email"
 							rules={{
 								required: "Email is required",
-								validate: (value) => {
+								validate: (value: any) => {
 									const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 									if (!regex.test(value)) {
 										return "You must type email here";
 									}
 								},
 							}}
-							render={({ field: { value, onChange, ...field } }) => (
-								<TextInput
-									className="mt-8"
-									title="Email"
-									icon={HiMail}
-									placeholder="yourmail@gmail.com"
-									{...register("username")}
-									onChange={(d: any) => {
-										onChange(d);
-										clearErrors();
-									}}
-									error={!!errors.username}
-								/>
-							)}
+							icon={HiMail}
+							register={register}
+							placeholder="yourmail@gmail.com"
+							onValueChange={(d: any) => {
+								clearErrors("username");
+							}}
+							error={errors.username}
 						/>
-						{errors.username && (
-							<p className="mt-2 text-sm text-error-500">
-								{errors.username.message}
-							</p>
-						)}
-						<Controller
+						<ControllerTextInput
 							control={control}
+							type="password"
 							name="password"
+							title="Password"
 							rules={{ required: "Password is required" }}
-							render={({ field: { value, onChange, ...field } }) => (
-								<TextInput
-									type="password"
-									className=" mt-5"
-									title="Password"
-									placeholder="Enter your password"
-									{...register("password")}
-									onChange={(d: any) => {
-										onChange(d);
-										clearErrors();
-									}}
-									error={!!errors.password}
-									name="password"
-								/>
-							)}
+							register={register}
+							placeholder="Enter your password"
+							onValueChange={(d: any) => {
+								clearErrors("password");
+							}}
+							error={errors.password}
 						/>
-						{errors.password && (
-							<p className="mt-2 text-sm text-error-500">
-								{errors.password.message}
-							</p>
-						)}
 						{errors.root && (
 							<p className="mt-3 text-sm text-center text-error-500">
 								{errors.root.message}
