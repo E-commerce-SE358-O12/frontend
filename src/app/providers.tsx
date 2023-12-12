@@ -15,13 +15,21 @@ export default function TokenProvider({ children }: ReactNodeChildren) {
 	});
 
 	useEffect(() => {
-		if (!token.refreshToken && pathname !== "/signin") {
+		if (!token?.refreshToken && pathname !== "/signin") {
 			redirect("/signin");
 		}
-	}, [token.accessToken, token.refreshToken, pathname]);
+	}, [token?.accessToken, token?.refreshToken, pathname]);
 
 	return (
-		<TokenContext.Provider value={{ token, setToken }}>
+		<TokenContext.Provider
+			value={{
+				token: token || {
+					accessToken: "",
+					refreshToken: "",
+				},
+				setToken,
+			}}
+		>
 			{children}
 		</TokenContext.Provider>
 	);
